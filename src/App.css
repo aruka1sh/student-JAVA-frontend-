@@ -1,76 +1,161 @@
+/* General Body Styles */
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: #282c34;
-    color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f4f7f9;
+  color: #333;
+  margin: 0;
+  padding: 20px;
 }
 
-.App {
-    text-align: center;
+/* Main Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.App-header {
-    padding: 20px;
-    border-bottom: 1px solid #444;
+header {
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-.App-main {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+header h1 {
+  color: #2c3e50;
+  margin: 0;
 }
 
-.student-form {
-    background-color: #3a3f4a;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
+/* Sections */
+main > div {
+  margin-bottom: 40px;
+  padding: 20px;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
 }
 
-.student-form h3 {
-    margin-top: 0;
+h2 {
+  color: #34495e;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  margin-top: 0;
 }
 
-.student-form input {
-    display: block;
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #555;
-    background-color: #282c34;
-    color: white;
-    font-size: 16px;
+/* Form Styles */
+.form-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.student-form button {
-    padding: 10px 20px;
-    border-radius: 4px;
-    border: none;
-    background-color: #61dafb;
-    color: #282c34;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: bold;
+input, select {
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s;
 }
 
-.student-form button:hover {
-    background-color: #88eaff;
+input:focus, select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
-.student-list ul {
-    list-style: none;
-    padding: 0;
+/* Grade Fields */
+.grade-field {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.student-list li {
-    background-color: #3a3f4a;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    text-align: left;
+.grade-field input[name="subject"] {
+  flex: 3;
 }
+
+.grade-field input[name="grade"] {
+  flex: 1;
+}
+
+.grade-field button {
+  padding: 8px 12px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-grade-btn {
+  align-self: flex-start;
+  background-color: #2ecc71;
+}
+
+/* Buttons */
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button.submit-btn {
+  background-color: #3498db;
+  font-weight: bold;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Admin Panel */
+.admin-section .distribute-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.admin-section button {
+    background-color: #e67e22;
+}
+
+
+/* Table Styles */
+.list-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.list-section th, .list-section td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.list-section th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+
+/* Status Styles */
+.status-grant {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.status-paid {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #7f8c8d;
+  font-weight: bold;
+}
+
