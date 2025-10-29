@@ -180,6 +180,273 @@ const translations = {
 
 // --- КОМПОНЕНТЫ СТРАНИЦ ---
 
+const LoginPage = ({ t, navigateTo }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/api/auth/login', { email, password });
+            navigateTo('dashboard', response.data);
+        } catch (error) {
+            alert(`Ошибка: ${error.response ? error.response.data.message : 'Ошибка сервера'}`);
+        }
+    };
+
+    return (
+        <div className="auth-page page-enter">
+            <div className="auth-container">
+                <div className="auth-panel left-panel">
+                    <div className="panel-content">
+                        <h1>{t('login_welcome')}</h1>
+                        <p>{t('login_prompt')}</p>
+                        <ArrowRight className="arrow-icon" />
+                    </div>
+                </div>
+                <div className="auth-panel right-panel">
+                    <form className="auth-form" onSubmit={handleSubmit}>
+                        <h2>{t('login_form_title')}</h2>
+                        <div className="input-group">
+                           <Mail size={20} />
+                           <input type="email" placeholder={t('email_placeholder')} value={email} onChange={e => setEmail(e.target.value)} required />
+                        </div>
+                        <div className="input-group">
+                           <Wrench size={20} />
+                           <input type="password" placeholder={t('password_placeholder')} value={password} onChange={e => setPassword(e.target.value)} required />
+                        </div>
+                        <div className="form-options">
+                            <label><input type="checkbox" /> {t('remember_me')}</label>
+                            <a href="#" onClick={(e) => e.preventDefault()}>{t('forgot_password')}</a>
+                        </div>
+                        <button type="submit">{t('continue_button')}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const RegisterPage = ({ t, navigateTo }) => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post('http://localhost:8080/api/auth/register', { name, email, password });
+            alert('Регистрация прошла успешно! Теперь вы можете войти.');
+            navigateTo('login');
+        } catch (error) {
+            alert(`Ошибка регистрации: ${error.response ? error.response.data.message : 'Сервер не отвечает'}`);
+        }
+    };
+
+    return (
+        <div className="auth-page page-enter">
+            <div className="auth-container">
+                <div className="auth-panel left-panel register-panel">
+                    <div className="panel-content">
+                        <h1>{t('register_welcome')}</h1>
+                        <p>{t('register_prompt')}</p>
+                        <ArrowRight className="arrow-icon" />
+                    </div>
+                </div>
+                <div className="auth-panel right-panel">
+                    <form className="auth-form" onSubmit={handleSubmit}>
+                        <h2>{t('register_form_title')}</h2>
+                         <div className="input-group">
+                           <User size={20} />
+                           <input type="text" placeholder={t('name_placeholder')} value={name} onChange={e => setName(e.target.value)} required />
+                        </div>
+                         <div className="input-group">
+                           <Mail size={20} />
+                           <input type="email" placeholder={t('email_placeholder')} value={email} onChange={e => setEmail(e.target.value)} required />
+                        </div>
+                         <div className="input-group">
+                           <Wrench size={20} />
+                           <input type="password" placeholder={t('password_placeholder')} value={password} onChange={e => setPassword(e.target.value)} required />
+                        </div>
+                        <button type="submit">{t('continue_button')}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const AboutPage = ({ t }) => (
+    <div className="utility-page page-enter about-page">
+        <h1>{t('about_title')}</h1>
+        <p>{t('about_p1')}</p>
+        <p>{t('about_p2')}</p>
+    </div>
+);
+
+const ContactPage = ({ t }) => {
+    const [formData, setFormData] = useState({ name: '', email: '', phone: '', role: '', message: '' });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post('http://localhost:8080/api/contact', formData);
+            alert('Сообщение успешно отправлено!');
+            setFormData({ name: '', email: '', phone: '', role: '', message: '' });
+        } catch (error) {
+            alert('Ошибка при отправке сообщения.');
+        }
+    };
+
+    return (
+      <div className="contact-page page-enter">
+        <div className="contact-container">
+          <div className="contact-form-card">
+            <h2>{t('contact_title')}</h2>
+            <p>{t('contact_subtitle')}</p>
+            <form onSubmit={handleSubmit}>
+              <div className="input-group">
+                <User size={20}/>
+                <input type="text" name="name" placeholder={t('your_name_placeholder')} value={formData.name} onChange={handleChange} required />
+              </div>
+              <div className="input-group">
+                <Mail size={20}/>
+                <input type="email" name="email" placeholder={t('your_email_placeholder')} value={formData.email} onChange={handleChange} required />
+              </div>
+              <div className="input-group">
+                <Phone size={20}/>
+                <input type="tel" name="phone" placeholder={t('your_phone_placeholder')} value={formData.phone} onChange={handleChange} />
+              </div>
+              <div className="input-group">
+                <Briefcase size={20}/>
+                <input type="text" name="role" placeholder={t('your_role_placeholder')} value={formData.role} onChange={handleChange} />
+              </div>
+              <div className="input-group">
+                <textarea name="message" placeholder={t('message_placeholder')} rows="4" value={formData.message} onChange={handleChange}></textarea>
+              </div>
+              <button type="submit">{t('send_message_button')}</button>
+            </form>
+          </div>
+          <div className="contact-info-map">
+            <h3>{t('contact_info_title')}</h3>
+            <div className="info-item"><Phone size={20} /><span>+ 776-888-30-07</span></div>
+            <div className="info-item"><Mail size={20} /><span>seriksisembaev@gmail.com</span></div>
+            <div className="info-item"><MapPin size={20} /><span>Astana, Mangilik El C1</span></div>
+            <div className="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2505.954332386109!2d71.4162818158402!3d51.0903248795689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585a60583195d%3A0x86e675285789433!2sAstana%20IT%20University!5e0!3m2!1sen!2skz!4v1668583842883!5m2!1sen!2skz"
+                width="100%" height="250" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Astana IT University Map"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+};
+
+const DevelopmentPage = ({ t }) => (
+    <div className="utility-page page-enter">
+        <Package size={80} className="dev-icon" />
+        <h1>{t('dev_title')}</h1>
+        <p>{t('dev_subtitle')}</p>
+    </div>
+);
+
+const ErrorPage = ({ t, navigateTo }) => (
+    <div className="utility-page page-enter">
+        <div className="error-content">
+            <div className="error-robot">🤖</div>
+            <div className="error-text">
+                <h1>{t('error_title')}</h1>
+                <h2>{t('error_subtitle')}</h2>
+                <p>{t('error_text')}</p>
+                <button onClick={() => navigateTo('login')}>{t('error_button')}</button>
+            </div>
+        </div>
+    </div>
+);
+
+const MaintenancePage = ({ t }) => (
+    <div className="utility-page page-enter">
+        <div className="maintenance-icons">
+            <Wrench className="icon-main" size={80} />
+            <AlertTriangle className="icon-sub" size={30} />
+        </div>
+        <h1>{t('maintenance_title')}</h1>
+        <p style={{ whiteSpace: 'pre-line' }}>{t('maintenance_text')}</p>
+    </div>
+);
+
+const DashboardPage = ({ t, user, navigateTo }) => {
+    return (
+        <div className="dashboard-page page-enter">
+            <h1>{t('dashboard_greeting')}, {user?.name}!</h1>
+            <p className="subtitle">{t('dashboard_info')}</p>
+            <div className="dashboard-cards">
+                <div className="dashboard-card" onClick={() => navigateTo('calculator')}>
+                    <div className="card-icon"><Calculator size={32}/></div>
+                    <h3>{t('dashboard_card_calculator_title')}</h3>
+                    <p>{t('dashboard_card_calculator_text')}</p>
+                </div>
+                <div className="dashboard-card" onClick={() => navigateTo('apply')}>
+                    <div className="card-icon"><FileText size={32}/></div>
+                    <h3>{t('dashboard_card_apply_title')}</h3>
+                    <p>{t('dashboard_card_apply_text')}</p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const GrantCalculatorPage = ({ t }) => {
+    const [grades, setGrades] = useState({ math: '', physics: '', kazakh: '', russian: '', history: '' });
+    const [average, setAverage] = useState(null);
+
+    const handleGradeChange = (subject, value) => {
+        const numValue = value === '' ? '' : Math.max(0, Math.min(5, Number(value)));
+        setGrades(prev => ({ ...prev, [subject]: numValue }));
+    };
+
+    const calculateAverage = () => {
+        const gradeValues = Object.values(grades).map(Number).filter(g => g > 0);
+        if (gradeValues.length === 0) {
+            setAverage(0);
+            return;
+        }
+        const sum = gradeValues.reduce((acc, curr) => acc + curr, 0);
+        setAverage((sum / gradeValues.length).toFixed(2));
+    };
+
+    return (
+        <div className="form-page page-enter">
+            <h1>{t('calculator_title')}</h1>
+            <p className="subtitle">{t('calculator_intro')}</p>
+            <div className="form-card">
+                <div className="grade-inputs">
+                    {Object.keys(grades).map(subject => (
+                        <div className="input-group" key={subject}>
+                            <label>{t(`subject_${subject}`)}</label>
+                            <input type="number" min="0" max="5" value={grades[subject]} onChange={e => handleGradeChange(subject, e.target.value)} />
+                        </div>
+                    ))}
+                </div>
+                <button onClick={calculateAverage}>{t('calculate_button')}</button>
+                {average !== null && (
+                    <div className="result-box">
+                        <h3>{t('your_avg_score')}:</h3>
+                        <p>{average}</p>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
 const ApplicationFormPage = ({ t }) => {
     // Персональные данные
     const [lastName, setLastName] = useState('');
@@ -198,7 +465,6 @@ const ApplicationFormPage = ({ t }) => {
     const [certificate, setCertificate] = useState(null);
     const [quotaFiles, setQuotaFiles] = useState([]);
 
-    // Автоматическое добавление предметов при смене языка
     useEffect(() => {
         const prioritySubjects = language === 'kz'
             ? [
@@ -214,7 +480,6 @@ const ApplicationFormPage = ({ t }) => {
         setSubjects(prioritySubjects);
     }, [language, t]);
 
-    // Валидация ИИН
     const handleIinChange = (e) => {
         const value = e.target.value;
         if (/^\d*$/.test(value) && value.length <= 12) {
@@ -229,7 +494,6 @@ const ApplicationFormPage = ({ t }) => {
         }
     };
 
-    // Функции для управления предметами
     const handleSubjectChange = (index, field, value) => {
         const newSubjects = [...subjects];
         newSubjects[index][field] = value;
@@ -238,7 +502,6 @@ const ApplicationFormPage = ({ t }) => {
     const addSubject = () => setSubjects([...subjects, { name: '', grade: '' }]);
     const removeSubject = (index) => setSubjects(subjects.filter((_, i) => i !== index));
 
-    // Функции для управления файлами квот
     const handleQuotaFileChange = (e) => {
         if (e.target.files[0]) {
             setQuotaFiles([...quotaFiles, e.target.files[0]]);
@@ -263,7 +526,7 @@ const ApplicationFormPage = ({ t }) => {
         const formData = new FormData();
         formData.append('certificate', certificate);
         quotaFiles.forEach(file => {
-            formData.append('quotaFiles', file); // Бэкенд должен быть готов принять массив
+            formData.append('quotaFiles', file);
         });
 
         const enrolleeData = {
@@ -289,8 +552,7 @@ const ApplicationFormPage = ({ t }) => {
             <h1>{t('apply_title')}</h1>
             <p className="subtitle">{t('apply_intro')}</p>
             <form className="form-card" onSubmit={handleSubmit}>
-                {/* --- Персональные данные --- */}
-                <div className="form-row">
+                <div className="form-row form-row-cols-3">
                     <div className="input-group">
                         <label>{t('apply_lastname')}</label>
                         <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} required/>
@@ -312,8 +574,7 @@ const ApplicationFormPage = ({ t }) => {
 
                 <hr/>
 
-                {/* --- Выбор обучения --- */}
-                <div className="form-row">
+                <div className="form-row form-row-cols-2">
                     <div className="input-group">
                         <label>{t('apply_language')}</label>
                         <select value={language} onChange={e => setLanguage(e.target.value)}>
@@ -338,7 +599,6 @@ const ApplicationFormPage = ({ t }) => {
 
                 <hr/>
 
-                {/* --- Оценки --- */}
                 <h3>{t('apply_grades')}</h3>
                 {subjects.map((subject, index) => (
                     <div className="subject-grade-row" key={index}>
@@ -353,7 +613,6 @@ const ApplicationFormPage = ({ t }) => {
 
                 <hr/>
 
-                {/* --- Файлы --- */}
                 <div className="input-group">
                     <label>{t('apply_certificate_upload')}</label>
                     <input type="file" accept=".pdf" onChange={e => setCertificate(e.target.files[0])} required/>
@@ -380,33 +639,22 @@ const ApplicationFormPage = ({ t }) => {
     );
 };
 
-// --- Dummy components to avoid breaking the App ---
-const DummyPage = ({ name }) => <div className="form-page page-enter"><h1>{name} Page</h1></div>;
-const LoginPage = ({ t, navigateTo }) => <DummyPage name="Login"/>;
-const RegisterPage = ({ t, navigateTo }) => <DummyPage name="Register"/>;
-const AboutPage = ({ t }) => <DummyPage name="About"/>;
-const ContactPage = ({ t }) => <DummyPage name="Contact"/>;
-const DevelopmentPage = ({ t }) => <DummyPage name="Development"/>;
-const ErrorPage = ({ t, navigateTo }) => <DummyPage name="Error"/>;
-const MaintenancePage = ({ t }) => <DummyPage name="Maintenance"/>;
-const DashboardPage = ({ t, user, navigateTo }) => <DummyPage name="Dashboard"/>;
-const GrantCalculatorPage = ({ t }) => <DummyPage name="Calculator"/>;
-
 
 function App() {
   const [language, setLanguage] = useState('kz');
-  const [currentPage, setCurrentPage] = useState('apply'); // Start on the application form page for testing
-  const [user, setUser] = useState({ name: 'Test User' }); // Mock user for testing
+  const [currentPage, setCurrentPage] = useState('register');
+  const [user, setUser] = useState(null);
   const [isExiting, setIsExiting] = useState(false);
 
   const t = (key) => (translations[language] && translations[language][key]) || translations.kz[key] || key;
 
   const navigateTo = (page, data = null) => {
-    if (currentPage === page) return;
+    if (currentPage === page && page !== 'dashboard') return;
     setIsExiting(true);
     setTimeout(() => {
         setCurrentPage(page);
-        if (data) setUser(data);
+        if (page === 'login' || page === 'register') setUser(null);
+        else if(data) setUser(data);
         setIsExiting(false);
     }, 400);
   };
@@ -416,12 +664,37 @@ function App() {
     navigateTo('login');
   }
 
+  useEffect(() => {
+    const loggedInPages = ['dashboard', 'calculator', 'apply'];
+    if (user && !loggedInPages.includes(currentPage)) {
+      navigateTo('dashboard');
+    }
+  }, [currentPage, user, navigateTo]);
+
+
   const renderPage = () => {
     const pageClassName = isExiting ? "page-exit" : "";
     const wrapPage = (Component) => <div className={pageClassName}>{Component}</div>;
 
-    // For this example, we always show the application form
-    return wrapPage(<ApplicationFormPage t={t} />);
+    if (user) {
+        switch (currentPage) {
+            case 'dashboard': return wrapPage(<DashboardPage t={t} user={user} navigateTo={navigateTo} />);
+            case 'calculator': return wrapPage(<GrantCalculatorPage t={t} />);
+            case 'apply': return wrapPage(<ApplicationFormPage t={t} />);
+            default: return null;
+        }
+    }
+
+    switch (currentPage) {
+      case 'login': return wrapPage(<LoginPage t={t} navigateTo={navigateTo} />);
+      case 'register': return wrapPage(<RegisterPage t={t} navigateTo={navigateTo} />);
+      case 'about': return wrapPage(<AboutPage t={t} />);
+      case 'contact': return wrapPage(<ContactPage t={t} />);
+      case 'development': return wrapPage(<DevelopmentPage t={t} />);
+      case 'maintenance': return wrapPage(<MaintenancePage t={t} />);
+      case 'error': return wrapPage(<ErrorPage t={t} navigateTo={navigateTo} />);
+      default: return wrapPage(<RegisterPage t={t} navigateTo={navigateTo} />);
+    }
   };
 
   return (
@@ -431,9 +704,62 @@ function App() {
             <div className="shape2"></div>
             <div className="shape3"></div>
         </div>
-      <main className="app-main" style={{alignItems: 'flex-start', paddingTop: '50px'}}>
-        {renderPage()}
-      </main>
+
+        <header className="app-header">
+            <nav className="main-nav">
+                {user ? (
+                    <>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('dashboard'); }} className={currentPage === 'dashboard' ? 'active' : ''}><LayoutDashboard size={16}/> {t('nav_dashboard')}</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('calculator'); }} className={currentPage === 'calculator' ? 'active' : ''}><Calculator size={16}/> {t('nav_calculator')}</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('apply'); }} className={currentPage === 'apply' ? 'active' : ''}><FileText size={16}/> {t('nav_apply')}</a>
+                    </>
+                ) : (
+                    <>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('about'); }} className={currentPage === 'about' ? 'active' : ''}>{t('nav_about')}</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('contact'); }} className={currentPage === 'contact' ? 'active' : ''}>{t('nav_contact')}</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('development'); }} className={currentPage === 'development' ? 'active' : ''}>{t('nav_development')}</a>
+                    </>
+                )}
+            </nav>
+            <div className="auth-nav">
+                {user ? (
+                    <>
+                        <span className="user-greeting"><UserCircle2 size={20}/> {user.name}</span>
+                        <button onClick={handleLogout} className="logout-btn"><LogOut size={16}/> {t('logout_button')}</button>
+                    </>
+                ) : (
+                    <>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('login'); }}>{t('login_button')}</a>
+                        <button onClick={() => navigateTo('register')} className="register-btn">{t('register_button')}</button>
+                    </>
+                )}
+                <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('maintenance'); }} className="settings-btn"><Settings /></a>
+            </div>
+        </header>
+
+        <main className="app-main">
+            {renderPage()}
+        </main>
+
+        <footer className="app-footer">
+            <div className="footer-column">
+              <h4>КОМПАНИЯ</h4>
+              <a href="#">Біз туралы</a>
+              <a href="#">Неге біз?</a>
+            </div>
+            <div className="footer-column">
+              <h4>ҚЫЗМЕТТЕР</h4>
+              <a href="#">Автоматты балл есептеу</a>
+              <a href="#">Грант және ақылы тізімін қалыптастыру</a>
+            </div>
+            <div className="footer-column footer-right">
+                <p>© Smart admission 2025</p>
+                 <select className="lang-switcher" value={language} onChange={(e) => setLanguage(e.target.value)}>
+                    <option value="kz">Қазақша - kz</option>
+                    <option value="ru">Русский - ru</option>
+                </select>
+            </div>
+        </footer>
     </div>
   );
 }

@@ -8,7 +8,7 @@
   --text-color-light: #6b7280;
   --primary-purple: #8A2BE2;
   --primary-blue: #4169E1;
-  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-bg: rgba(255, 255, 255, 0.85);
   --border-color: #E0E0E0;
   --input-bg: #FFFFFF;
   --button-bg: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -82,33 +82,9 @@ body {
   animation: backgroundMove 50s infinite linear alternate;
 }
 
-.shape1 {
-  width: 550px;
-  height: 550px;
-  background: #A88BEB;
-  top: -20%;
-  left: -10%;
-}
-
-.shape2 {
-  width: 600px;
-  height: 600px;
-  background: #87CEEB;
-  bottom: -25%;
-  right: -15%;
-  animation-duration: 60s;
-}
-
-.shape3 {
-    width: 400px;
-    height: 400px;
-    background: #FFB6C1;
-    top: 40%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-    opacity: 0.25;
-    animation-duration: 40s;
-}
+.shape1 { width: 550px; height: 550px; background: #A88BEB; top: -20%; left: -10%; }
+.shape2 { width: 600px; height: 600px; background: #87CEEB; bottom: -25%; right: -15%; animation-duration: 60s; }
+.shape3 { width: 400px; height: 400px; background: #FFB6C1; top: 40%; left: 45%; transform: translate(-50%, -50%); opacity: 0.25; animation-duration: 40s; }
 
 
 /* --- Шапка --- */
@@ -120,14 +96,21 @@ body {
   width: 100%;
 }
 
+.main-nav {
+  display: flex; /* ИСПРАВЛЕНИЕ: Делаем меню горизонтальным */
+}
+
 .main-nav a {
-  margin: 0 20px;
+  margin: 0 20px; /* ИСПРАВЛЕНИЕ: Добавляем отступы */
   text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
   position: relative;
   padding-bottom: 5px;
   transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .main-nav a.active::after, .main-nav a:hover::after {
   content: '';
@@ -140,53 +123,27 @@ body {
   background: var(--button-bg);
   border-radius: 50%;
 }
-.main-nav a:hover {
-    color: var(--button-bg);
-}
+.main-nav a:hover { color: var(--button-bg); }
 
+.auth-nav { display: flex; align-items: center; gap: 15px; }
+.auth-nav a { text-decoration: none; color: var(--text-color); font-weight: 700; transition: transform 0.2s ease-in-out; }
+.auth-nav a:hover, .auth-nav button:hover { transform: scale(1.05); }
+.register-btn { background-color: #EDE1FF; color: #6A11CB; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+.register-btn:hover { background-color: #D6BCF5; }
+.settings-btn { color: #888; display: flex; align-items: center; }
+.settings-btn:hover { color: var(--text-color); }
+.user-greeting { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.logout-btn { background: none; border: 1px solid #ddd; color: var(--text-color); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 
-.auth-nav {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.auth-nav a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: 700;
-  transition: transform 0.2s ease-in-out;
-}
-.auth-nav a:hover, .auth-nav button:hover {
-    transform: scale(1.05);
-}
-.register-btn {
-  background-color: #EDE1FF;
-  color: #6A11CB;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.register-btn:hover {
-    background-color: #D6BCF5;
-}
-.settings-btn {
-    color: #888;
-    display: flex;
-    align-items: center;
-}
-.settings-btn:hover {
-    color: var(--text-color);
-}
 
 /* --- Основной контент --- */
 .app-main {
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Изменено для длинных форм */
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 /* --- Стили для страниц авторизации --- */
@@ -195,6 +152,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1; /* Чтобы они занимали центр */
 }
 
 .auth-container {
@@ -218,44 +176,19 @@ body {
   text-align: left;
   padding: 50px;
 }
-.panel-content {
-    max-width: 300px;
-}
-.left-panel h1 {
-  font-size: 48px;
-  font-weight: 800;
-  margin: 0;
-}
-.left-panel p {
-  font-size: 18px;
-  margin-top: 15px;
-  opacity: 0.9;
-}
-.arrow-icon {
-  width: 100px;
-  height: 100px;
-  color: white;
-  stroke-width: 1.5;
-  opacity: 0.3;
-  margin-top: 40px;
-}
-
+.panel-content { max-width: 300px; }
+.left-panel h1 { font-size: 48px; font-weight: 800; margin: 0; }
+.left-panel p { font-size: 18px; margin-top: 15px; opacity: 0.9; }
+.arrow-icon { width: 100px; height: 100px; color: white; stroke-width: 1.5; opacity: 0.3; margin-top: 40px; }
 .right-panel {
   background-color: var(--card-bg);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
 }
-.auth-form {
-  width: 350px;
-  display: flex;
-  flex-direction: column;
-}
-.auth-form h2 {
-  font-size: 32px;
-  margin-bottom: 30px;
-}
+.auth-form { width: 350px; display: flex; flex-direction: column; }
+.auth-form h2 { font-size: 32px; margin-bottom: 30px; }
 
-/* ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ ПОЛЕЙ ВВОДА */
+/* --- ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ ФОРМ --- */
 .input-group {
     position: relative;
     margin-bottom: 20px;
@@ -268,7 +201,7 @@ body {
     color: #aaa;
     stroke-width: 2;
     transition: color 0.3s;
-    pointer-events: none; /* Чтобы иконка не мешала клику */
+    pointer-events: none;
 }
 .input-group input,
 .input-group textarea,
@@ -284,48 +217,22 @@ body {
     box-sizing: border-box;
 }
 
-.custom-select-trigger {
-    cursor: pointer;
-    color: var(--text-color-light); /* Цвет плейсхолдера */
-}
-.custom-select-trigger.selected {
-    color: var(--text-color); /* Цвет выбранного значения */
-}
-
-.input-group textarea {
-    padding: 16px;
-    resize: vertical;
-    min-height: 120px;
-}
-
-.input-group input:focus,
-.custom-select-wrapper .custom-select-trigger:hover {
+.custom-select-trigger { cursor: pointer; color: var(--text-color-light); }
+.custom-select-trigger.selected { color: var(--text-color); }
+.input-group textarea { padding: 16px; resize: vertical; min-height: 120px; }
+.input-group input:focus, .custom-select-wrapper .custom-select-trigger:hover {
     outline: none;
     border-color: #a78bfa;
     box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.15);
 }
-.input-group input:focus + svg {
-    color: #6a11cb;
-}
-.custom-select-wrapper:focus-within svg:not(.select-arrow) {
-    color: #6a11cb;
-}
+.input-group input:focus + svg { color: #6a11cb; }
+.custom-select-wrapper:focus-within svg:not(.select-arrow) { color: #6a11cb; }
 .custom-select-wrapper:focus-within .custom-select-trigger {
     border-color: #a78bfa;
     box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.15);
 }
-
-
-.select-arrow {
-    position: absolute;
-    right: 18px;
-    left: auto;
-    transition: transform 0.3s ease;
-}
-.select-arrow.open {
-    transform: translateY(-50%) rotate(180deg);
-}
-
+.select-arrow { position: absolute; right: 18px; left: auto; transition: transform 0.3s ease; }
+.select-arrow.open { transform: translateY(-50%) rotate(180deg); }
 .custom-select-options {
     position: absolute;
     top: 105%;
@@ -339,44 +246,19 @@ body {
     overflow: hidden;
     animation: fadeIn 0.2s ease-out;
 }
-.custom-select-option {
-    padding: 16px 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.custom-select-option:hover {
-    background-color: #f3e8ff;
-}
-
-
+.custom-select-option { padding: 16px 20px; cursor: pointer; transition: background-color 0.2s; }
+.custom-select-option:hover { background-color: #f3e8ff; }
 .error-message {
     color: var(--error-color);
     font-size: 13px;
+    margin-top: 4px;
     position: absolute;
     bottom: -18px;
     left: 5px;
 }
-
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  margin-bottom: 25px;
-  color: var(--text-color-light);
-}
-
-.form-options a {
-  color: #6a11cb;
-  text-decoration: none;
-  font-weight: 500;
-}
-.form-options label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
+.form-options { display: flex; justify-content: space-between; align-items: center; font-size: 14px; margin-bottom: 25px; color: var(--text-color-light); }
+.form-options a { color: #6a11cb; text-decoration: none; font-weight: 500; }
+.form-options label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .auth-form button, .contact-form-card button {
   background: var(--button-bg);
   color: white;
@@ -395,59 +277,18 @@ body {
   box-shadow: 0 8px 20px rgba(106, 17, 203, 0.3);
 }
 
-
 /* --- Стили для страницы контактов --- */
-.contact-container {
-    display: flex;
-    gap: 30px;
-    width: 100%;
-    max-width: 1200px;
-    align-items: stretch;
-}
-.contact-form-card, .contact-info-map {
-    flex: 1;
-    padding: 40px;
-    background-color: var(--card-bg);
-    backdrop-filter: blur(25px);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-}
-.contact-form-card {
-    flex: 1.2;
-}
-
-.contact-form-card h2, .contact-info-map h3 {
-    margin-top: 0;
-    font-size: 32px;
-    font-weight: 800;
-}
-.contact-info-map h3 {
-    font-size: 24px;
-}
-.contact-form-card p {
-    color: var(--text-color-light);
-    margin-bottom: 30px;
-    line-height: 1.6;
-}
-.contact-form-card form {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-info-map {
-    display: flex;
-    flex-direction: column;
-}
+.contact-container { display: flex; gap: 30px; width: 100%; max-width: 1200px; align-items: stretch; }
+.contact-form-card, .contact-info-map { flex: 1; padding: 40px; background-color: var(--card-bg); backdrop-filter: blur(25px); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+.contact-form-card { flex: 1.2; }
+.contact-form-card h2, .contact-info-map h3 {  margin-top: 0;  font-size: 32px; font-weight: 800; }
+.contact-info-map h3 { font-size: 24px; }
+.contact-form-card p {  color: var(--text-color-light);  margin-bottom: 30px; line-height: 1.6; }
+.contact-form-card form {  display: flex;  flex-direction: column;  }
+.contact-info-map { display: flex; flex-direction: column; }
 .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-weight: 500;}
 .info-item svg { color: #6a11cb; }
-.map-container {
-    margin-top: auto;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-}
-
+.map-container { margin-top: auto; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
 
 /* --- Стили для служебных страниц (404, Тех. работы, Скоро) --- */
 .utility-page {
@@ -472,17 +313,8 @@ body {
     max-width: 600px;
     line-height: 1.7;
 }
-.about-page p {
-    text-align: left;
-    margin-bottom: 20px;
-}
-.dev-icon {
-    color: #6a11cb;
-    margin-bottom: 20px;
-    animation: backgroundMove 20s infinite linear alternate;
-}
-
-/* 404 Error */
+.about-page p { text-align: left; margin-bottom: 20px; }
+.dev-icon { color: #6a11cb; margin-bottom: 20px; animation: backgroundMove 20s infinite linear alternate; }
 .error-content { display: flex; align-items: center; gap: 50px; }
 .error-robot { font-size: 150px; animation: backgroundMove 20s infinite linear alternate; }
 .error-text { text-align: left; }
@@ -490,47 +322,288 @@ body {
 .error-text h2 { font-size: 28px; margin: 0; }
 .error-text p { max-width: 350px; margin: 15px 0 25px; }
 .error-text button {
-    background: var(--button-dark);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: var(--radius-md);
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background: var(--button-dark); color: white; border: none; padding: 15px 30px; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; transition: background-color 0.3s;
 }
 .error-text button:hover { background-color: var(--button-dark-hover); }
-
-/* Maintenance */
 .maintenance-icons { display: flex; align-items: center; gap: 20px; color: #6a11cb; }
 .maintenance-icons .icon-main { animation: backgroundMove 15s infinite linear alternate; }
 .maintenance-icons .icon-sub { animation: backgroundMove 20s infinite linear alternate; opacity: 0.7; }
 
-/* Dashboard */
-.dashboard-page h1 {
-    font-size: 3rem;
-}
-.dashboard-page p {
+
+/* --- СТИЛИ ДЛЯ СТРАНИЦ ПОСЛЕ ВХОДА --- */
+.subtitle {
     font-size: 1.2rem;
-    color: #555;
-}
-.user-greeting {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-}
-.logout-btn {
-    background: none;
-    border: 1px solid #ddd;
-    color: var(--text-color);
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 700;
+    color: var(--text-color-light);
+    margin-top: -10px;
+    margin-bottom: 40px;
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.6;
 }
 
-/* Footer */
+/* Dashboard */
+.dashboard-page {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.dashboard-page h1 { font-size: 2.5rem; }
+.dashboard-cards { display: flex; gap: 30px; margin-top: 20px; }
+.dashboard-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    width: 350px;
+    text-align: left;
+    box-shadow: var(--shadow-md);
+    border: 1px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.dashboard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+.card-icon {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f3e8ff, #e1f2ff);
+    display: flex; align-items: center; justify-content: center;
+    color: #6a11cb;
+    margin-bottom: 20px;
+}
+.dashboard-card h3 { margin-top: 0; font-size: 1.5rem; }
+.dashboard-card p { color: var(--text-color-light); line-height: 1.6; }
+
+/* Калькулятор и форма заявки */
+.form-page {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-page h1 { font-size: 2.5rem; }
+.form-card {
+    width: 100%;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+.form-card .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    position: relative;
+}
+.form-card .input-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+.form-card .input-group input,
+.form-card .input-group select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+.form-card .input-group input[type="file"] {
+    padding: 12px;
+}
+.form-card .input-group input[type="file"]::file-selector-button {
+    margin-right: 12px;
+    border: 1px solid var(--border-color);
+    background: #f3f4f6;
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    color: var(--text-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.form-card .input-group input[type="file"]::file-selector-button:hover {
+    background-color: #e5e7eb;
+}
+
+.form-card .input-group input:focus,
+.form-card .input-group select:focus {
+    outline: none;
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.15);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr; /* По умолчанию одна колонка */
+    gap: 20px;
+}
+
+/* На широких экранах (десктопах) */
+@media (min-width: 768px) {
+    .form-row-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .form-row-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+.grade-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+}
+.form-card button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 20px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.form-card button:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.secondary-button {
+    background: #f3f4f6;
+    color: var(--text-color);
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--border-color);
+}
+.secondary-button:hover {
+    background: #e5e7eb;
+    box-shadow: none;
+    transform: none;
+}
+.result-box {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f3e8ff;
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+.result-box p {
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+.result-box strong { font-size: 1.5rem; color: #6a11cb; }
+.result-box small { color: var(--text-color-light); }
+
+.subject-grade-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 40px;
+    gap: 15px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.subject-grade-row input[readOnly] {
+    background-color: #f3f4f6;
+    color: var(--text-color-light);
+    cursor: not-allowed;
+}
+.subject-grade-row input:last-of-type {
+    text-align: center;
+}
+.remove-btn {
+    padding: 8px;
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    transition: background-color 0.2s;
+}
+.remove-btn:hover { background: #fecaca; }
+
+.file-chip {
+    display: inline-flex;
+    align-items: center;
+    background-color: #eef2ff;
+    color: #4338ca;
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    margin: 5px 5px 0 0;
+}
+.file-chip button {
+    background: none;
+    border: none;
+    color: #4338ca;
+    margin: 0 0 0 8px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* ИСПРАВЛЕНИЕ: Стиль кнопки квоты как у аттестата */
+.file-add-button {
+    background: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    font-weight: 400;
+    justify-content: flex-start; /* Выравнивание текста по левому краю */
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box; /* Важно для правильной ширины */
+}
+.file-add-button svg {
+    margin-right: 8px;
+}
+.file-add-button:hover {
+    background-color: var(--input-bg) !important; /* Убираем эффект hover от secondary-button */
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.15);
+}
+
+/* Стили для обычного input[type=file], чтобы он был похож на кнопку */
+.form-card .input-group input[type="file"] {
+    color: var(--text-color-light);
+    padding: 12px 18px; /* Выравниваем отступы */
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 30px 0;
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 13px;
+    margin-top: 4px;
+}
+.form-options label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500;}
+
+/* --- Футер --- */
 .app-footer {
   display: flex;
   justify-content: space-between;
@@ -570,3 +643,4 @@ body {
     font-family: var(--font-family);
     color: var(--text-color);
 }
+
